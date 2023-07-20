@@ -89,7 +89,8 @@ a {
     display: flex;
     justify-content: space-around;
     margin-top: 40px;
-    border: 1px solid red;
+    margin-bottom: 60px;
+    /* border: 1px solid red; */
 }
 
 .info-cards img {
@@ -110,7 +111,7 @@ a {
 .card-text2,
 .card-text3,
 .card-text4 {
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     display: flex;
     flex-direction: column;
     width: 21vh;
