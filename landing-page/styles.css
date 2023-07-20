@@ -104,3 +104,22 @@ a {
     width: 21vh;
 }
 
+.testimonial {
+    background-color: #E5E7EB;
+    padding: 128px 64px;
+    display: flex;
+    justify-content: center;
+}
+
+#testimonial-text{
+    font-size: 36px;
+    font-weight: lighter;
+    font-style: italic;
+    /* text-align: center; */
+    width: 800px;
+}
+
+.card-signup {
+    
+}
+
