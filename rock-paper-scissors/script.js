@@ -2,29 +2,48 @@
 let playerScore = 0;
 let computerScore = 0;
 let roundsCompleted = 0;
+let playerChoice = "";
+let computerChoice = "";
 const totalRounds = 5;
 
 function main(){
     console.log("script executed");
-    let playerChoice;
-    let computerChoice;
-    for (i = 0; i < 5; i++)
-    {
-        playerChoice = playerSelection();
-        computerChoice = getComputerChoice();
-        game(playerChoice, computerChoice);
-    }
-    decideWinner();
+    const choices = ["Rock", "Paper", "Scissors"];
+    const buttonClassNames = ["rock-btn", "paper-btn", "scissor-tbn"]
+    // Once user clicks start change the UI to display 3 buttons
+    const gameStartButton = document.querySelector("button");
+    gameStartButton.addEventListener("click", () => {
+        console.log("button clicked")
+        // Remove start button and add 3 game buttons
+        const startContainer = document.querySelector(".starter-container");
+        startContainer.remove();
+        const gameContainer = document.querySelector(".game-btn-container");
+        const gameButtons = [];
+        for (let i = 0; i < 3; i++)
+        {
+            gameButtons.push(document.createElement("button"));
+            gameButtons[i].className = buttonClassNames[i];
+            gameButtons[i].textContent = choices[i];
+            gameContainer.appendChild(gameButtons[i]);
+        }
+        console.log("buttons created");
+        console.log(gameButtons[0]);
+        playerSelection(gameButtons);
+        console.log(playerChoice);
+    });
+
     return;
 }
 
 function decideWinner(){
     if (playerScore > computerScore){
-        alert("You Won by " + (playerScore - computerScore) + " point(s)\nPlayer: " + playerScore + "\nComputer: " + computerScore);
+        alert("You Won by " + (playerScore - computerScore) + 
+        " point(s)\nPlayer: " + playerScore + "\nComputer: " + computerScore);
     }
     else if (computerScore > playerScore)
     {
-        alert("You Lost by " + (computerScore - playerScore) +" point(s)\nComputer: " + computerScore + "\nPlayer: " + playerScore);
+        alert("You Lost by " + (computerScore - playerScore) 
+        + " point(s)\nComputer: " + computerScore + "\nPlayer: " + playerScore);
     }
     else
     {
@@ -40,7 +59,8 @@ function game(playerChoice, computerChoice){
         case (playerChoice == "scissors" && computerChoice == "paper"):
             alert(`You Win! ${playerChoice} beats ${computerChoice}`);
             playerScore++;
-            alert("Score is\nPlayer: " + playerScore + "\nComputer: " + computerScore);
+            alert("Score is\nPlayer: " + playerScore + "\nComputer: " 
+            + computerScore);
             break;
         case (computerChoice == "rock" && playerChoice == "scissors"):
         case (computerChoice == "scissors" && playerChoice == "paper"):
@@ -48,7 +68,8 @@ function game(playerChoice, computerChoice){
         case (computerChoice == "scissors" && playerChoice == "paper"):
             alert(`You Lose! ${computerChoice} beats ${playerChoice}`);
             computerScore++;
-            alert("Score is\nPlayer: " + playerScore + "\nComputer: " + computerScore);
+            alert("Score is\nPlayer: " + playerScore + "\nComputer: " 
+            + computerScore);
             break;
         case (playerChoice == computerChoice):
             alert(`Tie!`);
@@ -57,23 +78,12 @@ function game(playerChoice, computerChoice){
     roundsCompleted++;
 }
 
-//Function to get player selection
+// Function to get player selection
 
-function playerSelection(){
-    let playerChoice;
-    while(true)
-    {
-        playerChoice = prompt("Rock, paper, or scissors?");
-        playerChoice = playerChoice.toLowerCase();
-        if (playerChoice == "rock" || playerChoice == "paper" 
-            || playerChoice == "scissors")
-        {
-            return playerChoice;
-        }
-        else{
-            alert("Invalid choice!");
-        }
-    }
+function playerSelection(gameButtonArray){
+    gameButtonArray[0].addEventListener("click", () => {
+        playerChoice = "rock";
+    });
 }
 
 // Function to get computer choice
