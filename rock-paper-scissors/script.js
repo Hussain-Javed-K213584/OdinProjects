@@ -4,7 +4,7 @@ let computerScore = 0;
 let roundsCompleted = 0;
 let playerChoice = "";
 let computerChoice = "";
-const totalRounds = 5;
+const TOTAL_ROUNDS = 5;
 
 const choices = ["Rock", "Paper", "Scissors"];
 const buttonClassNames = ["rock-btn", "paper-btn", "scissor-tbn"]
@@ -37,6 +37,14 @@ function decideWinner(){
     {
         alert("It's a Tie! You both scored " + computerScore);
     }
+}
+
+function resetGame(){
+    playerChoice = "";
+    computerChoice = "";
+    playerScore = 0;
+    computerScore = 0;
+    roundsCompleted = 0;
 }
 
 function game(playerChoice, computerChoice){
@@ -72,18 +80,42 @@ function playerSelection(gameButtonArray){
     gameButtonArray[0].addEventListener("click", ()=>{
         playerChoice = "rock";
         computerChoice = getComputerChoice();
+        game(playerChoice, computerChoice);
         console.log(playerChoice.concat(" ") + computerChoice)
-    })
+        console.log("rounds compelted: ".concat(roundsCompleted));
+        if (roundsCompleted == TOTAL_ROUNDS)
+        {
+            decideWinner();
+            resetGame();
+            return;
+        }
+    });
     gameButtonArray[1].addEventListener("click", ()=>{
         playerChoice = "paper";
         computerChoice = getComputerChoice();
+        game(playerChoice, computerChoice);
         console.log(playerChoice.concat(" ") + computerChoice)
-    })
+        console.log("rounds compelted: ".concat(roundsCompleted));
+        if (roundsCompleted == TOTAL_ROUNDS)
+        {
+            decideWinner();
+            resetGame();
+            return;
+        }
+    });
     gameButtonArray[2].addEventListener("click", ()=>{
         playerChoice = "scissors";
         computerChoice = getComputerChoice();
+        game(playerChoice, computerChoice);
         console.log(playerChoice.concat(" ") + computerChoice)
-    })
+        console.log("rounds compelted: ".concat(roundsCompleted));
+        if (roundsCompleted == TOTAL_ROUNDS)
+        {
+            decideWinner();
+            resetGame();
+            return;
+        }
+    });
 }
 
 // Function to get computer choice
