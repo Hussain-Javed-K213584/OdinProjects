@@ -7,18 +7,16 @@ let computerChoice = "";
 const totalRounds = 5;
 
 function main(){
-    console.log("script executed");
     const choices = ["Rock", "Paper", "Scissors"];
     const buttonClassNames = ["rock-btn", "paper-btn", "scissor-tbn"]
     // Once user clicks start change the UI to display 3 buttons
     const gameStartButton = document.querySelector("button");
     gameStartButton.addEventListener("click", () => {
-        console.log("button clicked")
         // Remove start button and add 3 game buttons
         const startContainer = document.querySelector(".starter-container");
         startContainer.remove();
         const gameContainer = document.querySelector(".game-btn-container");
-        const gameButtons = [];
+        let gameButtons = [];
         for (let i = 0; i < 3; i++)
         {
             gameButtons.push(document.createElement("button"));
@@ -26,12 +24,12 @@ function main(){
             gameButtons[i].textContent = choices[i];
             gameContainer.appendChild(gameButtons[i]);
         }
-        console.log("buttons created");
-        console.log(gameButtons[0]);
-        playerSelection(gameButtons);
-        console.log(playerChoice);
+        gameButtons[0].addEventListener("click", ()=>{
+            playerChoice = "rock";
+            computerChoice = getComputerChoice();
+            console.log(computerChoice + " " + playerChoice)
+        })
     });
-
     return;
 }
 
@@ -73,7 +71,7 @@ function game(playerChoice, computerChoice){
             break;
         case (playerChoice == computerChoice):
             alert(`Tie!`);
-            break;  
+            break; 
     }
     roundsCompleted++;
 }
@@ -82,16 +80,18 @@ function game(playerChoice, computerChoice){
 
 function playerSelection(gameButtonArray){
     gameButtonArray[0].addEventListener("click", () => {
-        playerChoice = "rock";
+        return "rock";
     });
 }
 
 // Function to get computer choice
 
 function getComputerChoice(){
+    let random = new Math.seedrandom();
+    console.log(`Random value: ${random()}`)
     let choices = ["rock", "paper", "scissors"];
-    let randomChoice = Math.floor(Math.random() * 3); // return a random number from 0 - 3
-    return choices[randomChoice];
+    let randomChoice = Math.floor(random() * 100); // return a random number from 0 - 3
+    return choices[randomChoice % 3];
 }
 
 main();
