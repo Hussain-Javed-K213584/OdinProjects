@@ -9,6 +9,7 @@ const TOTAL_ROUNDS = 5;
 const choices = ["Rock", "Paper", "Scissors"];
 const buttonClassNames = ["rock-btn", "paper-btn", "scissor-tbn"]
 const buttonContainer = document.querySelector(".game-btn-container")
+const winnderDisplayContainer = document.querySelector(".winner-display");
 
 // Generate buttons
 let gameButtonArray = [];
@@ -46,37 +47,68 @@ function resetGame(){
     playerScore = 0;
     computerScore = 0;
     roundsCompleted = 0;
+    if (document.contains(document.querySelector(".score-display")))
+    {
+        removeNodeIfExists(document.querySelector(".score-display").className);
+    }
+    if (document.contains(document.querySelector(".tie-display")))
+    {
+        removeNodeIfExists(document.querySelector(".tie-display").className);
+    }
+    const generateNewPara = document.createElement("p");
+    const gameContainer = document.querySelector(".score-display-container");
+    generateNewPara.className = "para prompt";
+    generateNewPara.textContent = "Click on any of the choices to restart";
+    gameContainer.appendChild(generateNewPara);
+    
+}
+
+// Helper function to remove node if it exists
+
+function removeNodeIfExists(nodeClassName)
+{
+    if (document.contains(document.querySelector('.'+nodeClassName))){
+        document.querySelector('.'+nodeClassName).remove();
+    }
 }
 
 function game(playerChoice, computerChoice){
-    const gameContainer = document.querySelector(".score-container");
-    gameContainer.style.border = "1px solid black";
-    const heading = document.createElement("h2");
-    heading.textContent = "Score";
-    gameContainer.appendChild(heading);
-
+    const gameContainer = document.querySelector(".score-display-container");
+    if (document.contains(document.querySelector(".prompt")))
+    {
+        document.querySelector(".prompt").remove();
+    }
     const paragraph = document.createElement("p");
-    paragraph.innerHTML = `Computer Score: ${computerScore}
-    <br>Player Score: ${playerScore}`;
+    const displayTie = document.createElement("p");
+    paragraph.className = "score-display";
+    displayTie.className = "tie-display";
+    displayTie.textContent = "Tie, you both chose " + playerChoice;
     switch(true){
         case (playerChoice == "rock" && computerChoice == "scissors"):
         case (playerChoice == "scissors" && computerChoice == "paper"):
         case (playerChoice == "paper" && computerChoice == "rock"):
         case (playerChoice == "scissors" && computerChoice == "paper"):
-            alert(`You Win! ${playerChoice} beats ${computerChoice}`);
             playerScore++;
+            paragraph.innerHTML = `Computer Score: ${computerScore}
+            <br>Player Score: ${playerScore}`;
+            removeNodeIfExists(paragraph.className);
             gameContainer.appendChild(paragraph);
+            removeNodeIfExists(displayTie.className);
             break;
         case (computerChoice == "rock" && playerChoice == "scissors"):
         case (computerChoice == "scissors" && playerChoice == "paper"):
         case (computerChoice == "paper" && playerChoice == "rock"):
         case (computerChoice == "scissors" && playerChoice == "paper"):
-            alert(`You Lose! ${computerChoice} beats ${playerChoice}`);
             computerScore++;
+            paragraph.innerHTML = `Computer Score: ${computerScore}
+            <br>Player Score: ${playerScore}`;
+            removeNodeIfExists(paragraph.className);
             gameContainer.appendChild(paragraph);
+            removeNodeIfExists(displayTie.className);
             break;
         case (playerChoice == computerChoice):
-            alert(`Tie!`);
+            removeNodeIfExists(displayTie.className);
+            gameContainer.appendChild(displayTie);
             break; 
     }
     roundsCompleted++;

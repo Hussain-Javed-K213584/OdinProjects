@@ -1,3 +1,8 @@
+@font-face {
+    font-family: Golden-Age-Shad;
+    src: url(./fonts/Golden\ Age.ttf);
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -13,9 +18,6 @@ body{
     justify-content: center;
     min-height: 100vh;
 }
-/* .rock-btn{
-    background-color: green;
-} */
 
 .game-btn-container{
     display: flex;
@@ -25,21 +27,34 @@ body{
 
 .container{
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 5vh;
+    font-family: Golden-Age-Shad;
 }
 .score-container {
     border: 1px solid black;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: flex-start;
     padding-left: 30px;
-    width: 400px;
+    min-width: 40vh;
+    min-height: 20vh;
 }
 
-.score-display{
+.prompt, .score-display{
+    font-size: larger;
+}
+.score-display-container{
     border: 1px solid red;
+}
+
+.winner-display{
+    display: flex;
+    border: 2px solid blue;
+    min-width: 50vh;
 }
 
 .footer-content{
