@@ -21,6 +21,7 @@ for (let i = 0; i < 3; i++)
 
 }
 
+// Here the player will choose any of the 3 buttons
 playerSelection(gameButtonArray);
 
 function decideWinner(){
@@ -48,6 +49,15 @@ function resetGame(){
 }
 
 function game(playerChoice, computerChoice){
+    const gameContainer = document.querySelector(".score-container");
+    gameContainer.style.border = "1px solid black";
+    const heading = document.createElement("h2");
+    heading.textContent = "Score";
+    gameContainer.appendChild(heading);
+
+    const paragraph = document.createElement("p");
+    paragraph.innerHTML = `Computer Score: ${computerScore}
+    <br>Player Score: ${playerScore}`;
     switch(true){
         case (playerChoice == "rock" && computerChoice == "scissors"):
         case (playerChoice == "scissors" && computerChoice == "paper"):
@@ -55,8 +65,7 @@ function game(playerChoice, computerChoice){
         case (playerChoice == "scissors" && computerChoice == "paper"):
             alert(`You Win! ${playerChoice} beats ${computerChoice}`);
             playerScore++;
-            alert("Score is\nPlayer: " + playerScore + "\nComputer: " 
-            + computerScore);
+            gameContainer.appendChild(paragraph);
             break;
         case (computerChoice == "rock" && playerChoice == "scissors"):
         case (computerChoice == "scissors" && playerChoice == "paper"):
@@ -64,8 +73,7 @@ function game(playerChoice, computerChoice){
         case (computerChoice == "scissors" && playerChoice == "paper"):
             alert(`You Lose! ${computerChoice} beats ${playerChoice}`);
             computerScore++;
-            alert("Score is\nPlayer: " + playerScore + "\nComputer: " 
-            + computerScore);
+            gameContainer.appendChild(paragraph);
             break;
         case (playerChoice == computerChoice):
             alert(`Tie!`);
@@ -80,6 +88,7 @@ function playerSelection(gameButtonArray){
     gameButtonArray[0].addEventListener("click", ()=>{
         playerChoice = "rock";
         computerChoice = getComputerChoice();
+        //Start the game after getting both computer and player choices
         game(playerChoice, computerChoice);
         console.log(playerChoice.concat(" ") + computerChoice)
         console.log("rounds compelted: ".concat(roundsCompleted));
