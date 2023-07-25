@@ -1,11 +1,27 @@
-body{
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+
+body{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
 /* .rock-btn{
     background-color: green;
 } */
+
+.game-btn-container{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
 
 .container{
     display: flex;
@@ -24,4 +40,14 @@ body{
 
 .score-display{
     border: 1px solid red;
+}
+
+.footer-content{
+    
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
