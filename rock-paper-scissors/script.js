@@ -9,7 +9,10 @@ const TOTAL_ROUNDS = 5;
 const choices = ["Rock", "Paper", "Scissors"];
 const buttonClassNames = ["rock-btn", "paper-btn", "scissor-tbn"]
 const buttonContainer = document.querySelector(".game-btn-container")
-const winnderDisplayContainer = document.querySelector(".winner-display");
+const winnerDisplayContainer = document.querySelector(".winner-display");
+const winnerDisplayText = document.createElement("h1");
+const loserDisplayText = document.createElement("h1");
+const tieDisplayText = document.createElement("h1");
 
 // Generate buttons
 let gameButtonArray = [];
@@ -27,17 +30,18 @@ playerSelection(gameButtonArray);
 
 function decideWinner(){
     if (playerScore > computerScore){
-        alert("You Won by " + (playerScore - computerScore) + 
-        " point(s)\nPlayer: " + playerScore + "\nComputer: " + computerScore);
+        winnerDisplayText.textContent = "Congratulations! You Win 🎉";
+        winnerDisplayContainer.appendChild(winnerDisplayText);
     }
     else if (computerScore > playerScore)
     {
-        alert("You Lost by " + (computerScore - playerScore) 
-        + " point(s)\nComputer: " + computerScore + "\nPlayer: " + playerScore);
+        loserDisplayText.textContent = "Unlucky, You Lost 💀"
+        winnerDisplayContainer.appendChild(loserDisplayText);
     }
     else
     {
-        alert("It's a Tie! You both scored " + computerScore);
+        tieDisplayText.textContent = "😐 Tie 😐";
+        winnerDisplayContainer.appendChild(tieDisplayText);
     }
 }
 
@@ -73,6 +77,18 @@ function removeNodeIfExists(nodeClassName)
 }
 
 function game(playerChoice, computerChoice){
+    if (document.contains(winnerDisplayText))
+    {
+        winnerDisplayText.remove();
+    }
+    else if (document.contains(loserDisplayText))
+    {
+        loserDisplayText.remove();
+    }
+    else if (document.contains(tieDisplayText))
+    {
+        tieDisplayText.remove();
+    }
     const gameContainer = document.querySelector(".score-display-container");
     if (document.contains(document.querySelector(".prompt")))
     {
@@ -90,7 +106,8 @@ function game(playerChoice, computerChoice){
         case (playerChoice == "scissors" && computerChoice == "paper"):
             playerScore++;
             paragraph.innerHTML = `Computer Score: ${computerScore}
-            <br>Player Score: ${playerScore}`;
+            <br>Player Score: ${playerScore}<br>
+            Rounds Completed: ${roundsCompleted+1} out of ${TOTAL_ROUNDS}`;
             removeNodeIfExists(paragraph.className);
             gameContainer.appendChild(paragraph);
             removeNodeIfExists(displayTie.className);
@@ -101,7 +118,8 @@ function game(playerChoice, computerChoice){
         case (computerChoice == "scissors" && playerChoice == "paper"):
             computerScore++;
             paragraph.innerHTML = `Computer Score: ${computerScore}
-            <br>Player Score: ${playerScore}`;
+            <br>Player Score: ${playerScore}<br>
+            Rounds Completed: ${roundsCompleted+1} out of ${TOTAL_ROUNDS}`;
             removeNodeIfExists(paragraph.className);
             gameContainer.appendChild(paragraph);
             removeNodeIfExists(displayTie.className);

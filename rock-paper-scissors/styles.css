@@ -1,6 +1,6 @@
 @font-face {
-    font-family: Golden-Age-Shad;
-    src: url(./fonts/Golden\ Age.ttf);
+    font-family: atarian;
+    src: url(./fonts/Atarian/SF\ Atarian\ System.ttf);
 }
 
 *{
@@ -15,7 +15,7 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     min-height: 100vh;
 }
 
@@ -31,7 +31,8 @@ body{
     align-items: center;
     justify-content: center;
     gap: 5vh;
-    font-family: Golden-Age-Shad;
+    font-family: atarian;
+    font-size: 3vh;
 }
 .score-container {
     border: 1px solid black;
@@ -40,21 +41,19 @@ body{
     justify-content: space-around;
     align-items: flex-start;
     padding-left: 30px;
-    min-width: 40vh;
+    min-width: 50vh;
     min-height: 20vh;
 }
 
-.prompt, .score-display{
-    font-size: larger;
-}
 .score-display-container{
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .winner-display{
     display: flex;
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     min-width: 50vh;
+    justify-content: center;
 }
 
 .footer-content{
@@ -65,4 +64,9 @@ body{
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+#display-heading{
+    font-family: atarian;
+    font-size: 7vh;
 }
