@@ -7,56 +7,47 @@ let computerChoice = "";
 const TOTAL_ROUNDS = 5;
 
 const choices = ["Rock", "Paper", "Scissors"];
-const buttonClassNames = ["rock-btn", "paper-btn", "scissor-tbn"]
+const buttonClassNames = ["rock-btn", "paper-btn", "scissor-btn"]
 const buttonContainer = document.querySelector(".game-btn-container")
 const winnerDisplayContainer = document.querySelector(".winner-display");
 const winnerDisplayText = document.createElement("h1");
 const loserDisplayText = document.createElement("h1");
 const tieDisplayText = document.createElement("h1");
 
-// Generate buttons
+// Used to get buttons
 let gameButtonArray = [];
-for (let i = 0; i < 3; i++)
-{
-    gameButtonArray.push(document.createElement("button"));
-    gameButtonArray[i].className = buttonClassNames[i];
-    gameButtonArray[i].textContent = choices[i];
-    buttonContainer.appendChild(gameButtonArray[i]);
-
+for (let i = 0; i < 3; i++) {
+    gameButtonArray.push(document.querySelector("."+buttonClassNames[i]))
 }
 
 // Here the player will choose any of the 3 buttons
 playerSelection(gameButtonArray);
 
-function decideWinner(){
-    if (playerScore > computerScore){
-        winnerDisplayText.textContent = "Congratulations! You Win 🎉";
+function decideWinner() {
+    if (playerScore > computerScore) {
+        winnerDisplayText.textContent = "Congratulations🥳 You Win 🎉";
         winnerDisplayContainer.appendChild(winnerDisplayText);
     }
-    else if (computerScore > playerScore)
-    {
+    else if (computerScore > playerScore) {
         loserDisplayText.textContent = "Unlucky, You Lost 💀"
         winnerDisplayContainer.appendChild(loserDisplayText);
     }
-    else
-    {
+    else {
         tieDisplayText.textContent = "😐 Tie 😐";
         winnerDisplayContainer.appendChild(tieDisplayText);
     }
 }
 
-function resetGame(){
+function resetGame() {
     playerChoice = "";
     computerChoice = "";
     playerScore = 0;
     computerScore = 0;
     roundsCompleted = 0;
-    if (document.contains(document.querySelector(".score-display")))
-    {
+    if (document.contains(document.querySelector(".score-display"))) {
         removeNodeIfExists(document.querySelector(".score-display").className);
     }
-    if (document.contains(document.querySelector(".tie-display")))
-    {
+    if (document.contains(document.querySelector(".tie-display"))) {
         removeNodeIfExists(document.querySelector(".tie-display").className);
     }
     const generateNewPara = document.createElement("p");
@@ -64,34 +55,29 @@ function resetGame(){
     generateNewPara.className = "para prompt";
     generateNewPara.textContent = "Click on any of the choices to restart";
     gameContainer.appendChild(generateNewPara);
-    
+
 }
 
 // Helper function to remove node if it exists
 
-function removeNodeIfExists(nodeClassName)
-{
-    if (document.contains(document.querySelector('.'+nodeClassName))){
-        document.querySelector('.'+nodeClassName).remove();
+function removeNodeIfExists(nodeClassName) {
+    if (document.contains(document.querySelector('.' + nodeClassName))) {
+        document.querySelector('.' + nodeClassName).remove();
     }
 }
 
-function game(playerChoice, computerChoice){
-    if (document.contains(winnerDisplayText))
-    {
+function game(playerChoice, computerChoice) {
+    if (document.contains(winnerDisplayText)) {
         winnerDisplayText.remove();
     }
-    else if (document.contains(loserDisplayText))
-    {
+    else if (document.contains(loserDisplayText)) {
         loserDisplayText.remove();
     }
-    else if (document.contains(tieDisplayText))
-    {
+    else if (document.contains(tieDisplayText)) {
         tieDisplayText.remove();
     }
     const gameContainer = document.querySelector(".score-display-container");
-    if (document.contains(document.querySelector(".prompt")))
-    {
+    if (document.contains(document.querySelector(".prompt"))) {
         document.querySelector(".prompt").remove();
     }
     const paragraph = document.createElement("p");
@@ -99,7 +85,7 @@ function game(playerChoice, computerChoice){
     paragraph.className = "score-display";
     displayTie.className = "tie-display";
     displayTie.textContent = "Tie, you both chose " + playerChoice;
-    switch(true){
+    switch (true) {
         case (playerChoice == "rock" && computerChoice == "scissors"):
         case (playerChoice == "scissors" && computerChoice == "paper"):
         case (playerChoice == "paper" && computerChoice == "rock"):
@@ -107,7 +93,7 @@ function game(playerChoice, computerChoice){
             playerScore++;
             paragraph.innerHTML = `Computer Score: ${computerScore}
             <br>Player Score: ${playerScore}<br>
-            Rounds Completed: ${roundsCompleted+1} out of ${TOTAL_ROUNDS}`;
+            Rounds Completed: ${roundsCompleted + 1} out of ${TOTAL_ROUNDS}`;
             removeNodeIfExists(paragraph.className);
             gameContainer.appendChild(paragraph);
             removeNodeIfExists(displayTie.className);
@@ -119,7 +105,7 @@ function game(playerChoice, computerChoice){
             computerScore++;
             paragraph.innerHTML = `Computer Score: ${computerScore}
             <br>Player Score: ${playerScore}<br>
-            Rounds Completed: ${roundsCompleted+1} out of ${TOTAL_ROUNDS}`;
+            Rounds Completed: ${roundsCompleted + 1} out of ${TOTAL_ROUNDS}`;
             removeNodeIfExists(paragraph.className);
             gameContainer.appendChild(paragraph);
             removeNodeIfExists(displayTie.className);
@@ -127,49 +113,46 @@ function game(playerChoice, computerChoice){
         case (playerChoice == computerChoice):
             removeNodeIfExists(displayTie.className);
             gameContainer.appendChild(displayTie);
-            break; 
+            break;
     }
     roundsCompleted++;
 }
 
 // Function to get player selection
 
-function playerSelection(gameButtonArray){
-    gameButtonArray[0].addEventListener("click", ()=>{
+function playerSelection(gameButtonArray) {
+    gameButtonArray[0].addEventListener("click", () => {
         playerChoice = "rock";
         computerChoice = getComputerChoice();
         //Start the game after getting both computer and player choices
         game(playerChoice, computerChoice);
         console.log(playerChoice.concat(" ") + computerChoice)
         console.log("rounds compelted: ".concat(roundsCompleted));
-        if (roundsCompleted == TOTAL_ROUNDS)
-        {
+        if (roundsCompleted == TOTAL_ROUNDS) {
             decideWinner();
             resetGame();
             return;
         }
     });
-    gameButtonArray[1].addEventListener("click", ()=>{
+    gameButtonArray[1].addEventListener("click", () => {
         playerChoice = "paper";
         computerChoice = getComputerChoice();
         game(playerChoice, computerChoice);
         console.log(playerChoice.concat(" ") + computerChoice)
         console.log("rounds compelted: ".concat(roundsCompleted));
-        if (roundsCompleted == TOTAL_ROUNDS)
-        {
+        if (roundsCompleted == TOTAL_ROUNDS) {
             decideWinner();
             resetGame();
             return;
         }
     });
-    gameButtonArray[2].addEventListener("click", ()=>{
+    gameButtonArray[2].addEventListener("click", () => {
         playerChoice = "scissors";
         computerChoice = getComputerChoice();
         game(playerChoice, computerChoice);
         console.log(playerChoice.concat(" ") + computerChoice)
         console.log("rounds compelted: ".concat(roundsCompleted));
-        if (roundsCompleted == TOTAL_ROUNDS)
-        {
+        if (roundsCompleted == TOTAL_ROUNDS) {
             decideWinner();
             resetGame();
             return;
@@ -179,7 +162,7 @@ function playerSelection(gameButtonArray){
 
 // Function to get computer choice
 
-function getComputerChoice(){
+function getComputerChoice() {
     let random = new Math.seedrandom();
     console.log(`Random value: ${random()}`)
     let choices = ["rock", "paper", "scissors"];

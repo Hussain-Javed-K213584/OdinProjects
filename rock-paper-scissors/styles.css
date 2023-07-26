@@ -21,8 +21,9 @@ body{
 
 .game-btn-container{
     display: flex;
-    justify-content: center;
-    gap: 50px;
+    justify-content: space-around;
+    min-width: 40vh;
+    border: 1px solid black;
 }
 
 .container{
@@ -63,10 +64,21 @@ body{
     bottom: 0;
     width: 100%;
     display: flex;
+    align-items: center;
     justify-content: center;
+    background-color: aliceblue;
+    min-height: 5vh;
+    font-family: atarian;
+    font-size: large;
 }
 
 #display-heading{
     font-family: atarian;
     font-size: 7vh;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    font-style: italic;
 }
