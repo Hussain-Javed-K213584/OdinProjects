@@ -21,11 +21,38 @@ body{
 
 .game-btn-container{
     display: flex;
-    justify-content: space-around;
-    min-width: 40vh;
-    border: 1px solid black;
+    justify-content: space-between;
+    min-width: 70vh;
+    /* border: 1px solid black; */
 }
 
+.rock-btn,
+.scissor-btn,
+.paper-btn{
+    border: 1px solid gray;
+    border-radius: 100%;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 10px;
+    box-shadow: -5px 5px 20px grey;
+}
+
+/* .rock-btn{
+    background-color: lightyellow;
+}
+.paper-btn{
+    background-color: lightgray;
+}
+.scissor-btn{
+    background-color: lightcyan;
+} */
+
+#rock-button-img, 
+#paper-button-img, 
+#scissor-button-img{
+    width: 100px;
+    height: 100px;
+}
 .container{
     display: flex;
     flex-direction: column;
@@ -36,7 +63,8 @@ body{
     font-size: 3vh;
 }
 .score-container {
-    border: 1px solid black;
+    border: 3px solid black;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
