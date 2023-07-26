@@ -46,10 +46,6 @@ body{
     min-height: 20vh;
 }
 
-.score-display-container{
-    /* border: 1px solid red; */
-}
-
 .winner-display{
     display: flex;
     /* border: 2px solid blue; */

@@ -112,6 +112,11 @@ function game(playerChoice, computerChoice) {
             break;
         case (playerChoice == computerChoice):
             removeNodeIfExists(displayTie.className);
+            removeNodeIfExists(paragraph.className);
+            paragraph.innerHTML = `Computer Score: ${computerScore}
+            <br>Player Score: ${playerScore}<br>
+            Rounds Completed: ${roundsCompleted + 1} out of ${TOTAL_ROUNDS}`;
+            gameContainer.appendChild(paragraph);
             gameContainer.appendChild(displayTie);
             break;
     }
