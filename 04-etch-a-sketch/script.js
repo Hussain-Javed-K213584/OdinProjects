@@ -3,8 +3,11 @@
 
 const gridContainer = document.querySelector(".grid-container");
 const changeGridButton = document.querySelector(".set-grid");
+const rainbowButton = document.querySelector(".rainbow-btn");
+const clearButton = document.querySelector(".clear-btn");
 const DEFAULT_ROWS = 16, DEFAULT_COLS = 16;
 let rows = DEFAULT_ROWS, cols = DEFAULT_COLS;
+let rainbowEffect = false;
 
 changeGridButton.addEventListener("click", () => {
     let input = prompt("Input the dimensions for the grids (1-100)");
@@ -19,6 +22,21 @@ changeGridButton.addEventListener("click", () => {
     createCells(rows, cols);
     startSketching();
 });
+
+rainbowButton.addEventListener("click", () => {
+    rainbowEffect = true;
+    removeOldGrids();
+    createCells(rows, cols);
+    startSketching();
+});
+
+clearButton.addEventListener("click", () => {
+    const gridItems = document.querySelectorAll(".grid-item");
+    gridItems.forEach(gridItem => {
+        gridItem.style.backgroundColor = "transparent";
+    })
+});
+
 
 function createCells(row, col)
 {
@@ -39,11 +57,22 @@ function startSketching()
 {
     const gridItems = document.querySelectorAll(".grid-item");
     // Add event listener on each item
-    gridItems.forEach(gridItem => {
-        gridItem.addEventListener('mouseover', () => {
-            gridItem.style.backgroundColor = "black";
-        })
-    })
+    if (!rainbowEffect){
+        gridItems.forEach(gridItem => {
+            gridItem.addEventListener('mouseover', () => {
+                gridItem.style.backgroundColor = "black";
+            });
+        });
+    }
+    if (rainbowEffect){
+        gridItems.forEach(gridItem => {
+            let buf = new Uint8Array(3);
+            crypto.getRandomValues(buf);
+            gridItem.addEventListener('mouseover', ()=>{
+                gridItem.style.backgroundColor = `rgb(${buf[0]}, ${buf[1]}, ${buf[2]})`;
+            })
+        });
+    }
 }
 
 function removeOldGrids(){
