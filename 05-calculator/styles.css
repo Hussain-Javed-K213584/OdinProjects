@@ -46,6 +46,12 @@ body{
     height: 70%;
 }
 
+.button-container{
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+}
+
 .credits{
     display: flex;
     justify-content: center;
