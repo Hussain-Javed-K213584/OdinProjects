@@ -1,5 +1,3 @@
-// DO INFIX EVALUATION
-
 console.log("script executed");
 const calculatorDisplay = document.querySelector(".display");
 const calculatorButtons = document.querySelectorAll(".calc-btns");
@@ -47,6 +45,13 @@ function clearDisplay(){
 }
 
 function evaluationProcess(currentCharacter){
+    /*
+        This function pops two values from
+        the operand stack, pops one operator
+        from the operator stack and performs
+        the evalutaion based on the switch cases
+        provided
+    */
     do{
         let num1 = parseInt(operandStack.pop());
         let num2 = parseInt(operandStack.pop());
@@ -87,9 +92,11 @@ function evaluateExpression(){
                     operatorStack.push(str);
                 }
                 else if (operatorStack.length()){
+                    // If current operator has higher or same precedence than the operator at top of stack, push current operator
                     if (operatorPrecedence[str] >= operatorPrecedence[operatorStack[operatorStack.length-1]]){
                         operatorStack.push(str);
                     }
+                    // If current operator has lower precedence than the current operator at top of the stack, perform process
                     else if (operatorPrecedence[str] < operatorPrecedence[operatorStack[operatorStack.length-1]]){
                         evaluationProcess(str);
                     }
@@ -114,4 +121,5 @@ function evaluateExpression(){
     {
         expression.pop();
     }
+    // Known issue is, cannot use more than one operator
 }
