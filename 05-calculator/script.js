@@ -3,8 +3,16 @@
 console.log("script executed");
 const calculatorDisplay = document.querySelector(".display");
 const calculatorButtons = document.querySelectorAll(".calc-btns");
-let operandStack = [1, 2, 3, 4, 5];
+let operandStack = [];
 let operatorStack = [];
+let operatorPrecedence = {
+    "÷": 2,
+    "×": 2,
+    "+": 1,
+    "−": 1
+};
+let expression = [];
+let number = "";
 calculatorButtons.forEach((button) => {
     button.addEventListener("click", () => {
         switch(button.classList[1])
@@ -12,23 +20,98 @@ calculatorButtons.forEach((button) => {
             case "clear-btn":
                 clearDisplay();
                 break;
-            case "divide-btn":
-            case "sub-btn":
-                console.log("subtraction");
-            case "multiply-btn":
-            case "add-btn":
-                operator += button.textContent;
-                break; 
             case "equal-btn":
+                expression.push(number);
+                number = "";
+                evaluateExpression();
+                break;
+            case "add-btn":
+            case "sub-btn":
+            case "divide-btn":
+            case "multiply-btn":
+                expression.push(number);
+                expression.push(button.innerText);
+                number = "";
+                calculatorDisplay.innerText += button.innerText;
+                break;
             default:
-                calculatorDisplay.textContent += button.textContent;
-                numbers += button.textContent;
-
+                number += button.innerText;
+                calculatorDisplay.innerText += button.innerText;
         }
     });
 });
 
 // Clear the display
 function clearDisplay(){
-    calculatorDisplay.textContent = "";
+    calculatorDisplay.innerText = "";
+}
+
+function evaluationProcess(currentCharacter){
+    do{
+        let num1 = parseInt(operandStack.pop());
+        let num2 = parseInt(operandStack.pop());
+        let operator = operatorStack.pop();
+        let operationEvaluation = 0;
+        switch(operator)
+        {
+            case "+":
+                operationEvaluation = num1 + num2;
+                operandStack.push(operationEvaluation);
+                break;
+            case "−":
+                operationEvaluation = num1 - num2;
+                operandStack.push(operationEvaluation);
+                break;
+            case "÷":
+                operationEvaluation = num1 / num2;
+                operandStack.push(operationEvaluation);
+                break;
+            case "×":
+                operationEvaluation = num1 * num2;
+                operandStack.push(operationEvaluation);
+                break;
+        }
+    }while(operatorPrecedence[currentCharacter] > operatorStack[operatorStack.length - 1]
+        || operatorStack.length != 0);
+}
+
+function evaluateExpression(){
+    for (str of expression){
+        switch(str)
+        {
+            case "+":
+            case "−":
+            case "÷":
+            case "×":
+                if (operatorStack.length == 0){
+                    operatorStack.push(str);
+                }
+                else if (operatorStack.length()){
+                    if (operatorPrecedence[str] >= operatorPrecedence[operatorStack[operatorStack.length-1]]){
+                        operatorStack.push(str);
+                    }
+                    else if (operatorPrecedence[str] < operatorPrecedence[operatorStack[operatorStack.length-1]]){
+                        evaluationProcess(str);
+                    }
+                }
+                break;
+            default:
+                operandStack.push(str);
+        }
+    }
+    let i = 0;
+    while(operatorStack.length != 0){
+        evaluationProcess(operatorStack[i]);
+        i++;
+    }
+    console.log(operandStack);
+    calculatorDisplay.innerText = operandStack[0];
+    while(operandStack.length != 0)
+    {
+        operandStack.pop();
+    }
+    while(expression.length != 0)
+    {
+        expression.pop();
+    }
 }
