@@ -55,19 +55,19 @@ function evaluationProcess(currentCharacter){
         switch(operator)
         {
             case "+":
-                operationEvaluation = num1 + num2;
+                operationEvaluation = num2 + num1;
                 operandStack.push(operationEvaluation);
                 break;
             case "−":
-                operationEvaluation = num1 - num2;
+                operationEvaluation = num2 - num1;
                 operandStack.push(operationEvaluation);
                 break;
             case "÷":
-                operationEvaluation = num1 / num2;
+                operationEvaluation = num2 / num1;
                 operandStack.push(operationEvaluation);
                 break;
             case "×":
-                operationEvaluation = num1 * num2;
+                operationEvaluation = num2 * num1;
                 operandStack.push(operationEvaluation);
                 break;
         }
