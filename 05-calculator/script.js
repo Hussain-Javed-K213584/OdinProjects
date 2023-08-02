@@ -13,6 +13,10 @@ let expression = [];
 let number = "";
 calculatorButtons.forEach((button) => {
     button.addEventListener("click", () => {
+        if (operandStack.length == 1){
+            expression.push(operandStack[0]);
+            operandStack.pop();
+        }
         switch(button.classList[1])
         {
             case "clear-btn":
@@ -21,6 +25,9 @@ calculatorButtons.forEach((button) => {
             case "equal-btn":
                 expression.push(number);
                 number = "";
+                if(expression.includes('')){
+                    expression.splice(expression.indexOf(''), 1);
+                }
                 evaluateExpression();
                 break;
             case "add-btn":
@@ -33,6 +40,9 @@ calculatorButtons.forEach((button) => {
                 calculatorDisplay.innerText += button.innerText;
                 break;
             default:
+                if (button.classList[1] == "dot" && number.indexOf(".") != -1){
+                    break;
+                }
                 number += button.innerText;
                 calculatorDisplay.innerText += button.innerText;
         }
@@ -42,6 +52,8 @@ calculatorButtons.forEach((button) => {
 // Clear the display
 function clearDisplay(){
     calculatorDisplay.innerText = "";
+    number = "";
+    operandStack = [];
 }
 
 function evaluationProcess(currentCharacter){
@@ -53,8 +65,8 @@ function evaluationProcess(currentCharacter){
         provided
     */
     do{
-        let num1 = parseInt(operandStack.pop());
-        let num2 = parseInt(operandStack.pop());
+        let num1 = parseFloat(operandStack.pop());
+        let num2 = parseFloat(operandStack.pop());
         let operator = operatorStack.pop();
         let operationEvaluation = 0;
         switch(operator)
@@ -91,7 +103,7 @@ function evaluateExpression(){
                 if (operatorStack.length == 0){
                     operatorStack.push(str);
                 }
-                else if (operatorStack.length()){
+                else if (operatorStack.length){
                     // If current operator has higher or same precedence than the operator at top of stack, push current operator
                     if (operatorPrecedence[str] >= operatorPrecedence[operatorStack[operatorStack.length-1]]){
                         operatorStack.push(str);
@@ -99,6 +111,7 @@ function evaluateExpression(){
                     // If current operator has lower precedence than the current operator at top of the stack, perform process
                     else if (operatorPrecedence[str] < operatorPrecedence[operatorStack[operatorStack.length-1]]){
                         evaluationProcess(str);
+                        operatorStack.push(str);
                     }
                 }
                 break;
@@ -113,13 +126,6 @@ function evaluateExpression(){
     }
     console.log(operandStack);
     calculatorDisplay.innerText = operandStack[0];
-    while(operandStack.length != 0)
-    {
-        operandStack.pop();
-    }
-    while(expression.length != 0)
-    {
-        expression.pop();
-    }
-    // Known issue is, cannot use more than one operator
+    expression = [];
+    
 }
