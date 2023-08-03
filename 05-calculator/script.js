@@ -1,6 +1,7 @@
 console.log("script executed");
-const calculatorDisplay = document.querySelector(".display");
+const calculatorDisplay = document.querySelector(".current-calculation");
 const calculatorButtons = document.querySelectorAll(".calc-btns");
+const previousCalculation = document.querySelector(".prev-calculation");
 let operandStack = [];
 let operatorStack = [];
 let operatorPrecedence = {
