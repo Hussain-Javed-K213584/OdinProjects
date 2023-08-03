@@ -13,21 +13,29 @@ let expression = [];
 let number = "";
 calculatorButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        if (operandStack.length == 1){
-            expression.push(operandStack[0]);
-            operandStack.pop();
-        }
+        // if (operandStack.length == 1){
+        //     expression.push(operandStack[0]);
+        //     operandStack.pop();
+        // }
         switch(button.classList[1])
         {
+            case "backspace-btn":
+                console.log(number);
+                number = number.replace(/.$/,'');
+                console.log(number);
+                calculatorDisplay.innerText = number;
+                break;
             case "clear-btn":
                 clearDisplay();
                 break;
             case "equal-btn":
                 expression.push(number);
                 number = "";
-                if(expression.includes('')){
-                    expression.splice(expression.indexOf(''), 1);
-                }
+                expression.forEach(() => {
+                    if(expression.includes('')){
+                        expression.splice(expression.indexOf(''), 1);
+                    }
+                })
                 evaluateExpression();
                 break;
             case "add-btn":
@@ -125,7 +133,9 @@ function evaluateExpression(){
         i++;
     }
     console.log(operandStack);
-    calculatorDisplay.innerText = operandStack[0];
+    number = operandStack[0].toString();
+    calculatorDisplay.innerText = number;
+    operandStack = [];
     expression = [];
     
 }
